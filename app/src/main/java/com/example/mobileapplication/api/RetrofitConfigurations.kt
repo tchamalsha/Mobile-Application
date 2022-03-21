@@ -7,20 +7,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface UserService{
+interface UserAPIService{
 //    @GET("users")
 //    fun getUsers(): Call<List<User>>
 
-    @GET("users/{id}")
+    @GET("users/{userID}")
     fun getUser(@Path("userID") id:String):Call<User>
 
     companion object {
         val API_URL = "https://jsonplaceholder.typicode.com/"
-        val retrofit  = Retrofit.Builder()
-            .baseUrl(API_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val userServices = retrofit.create(UserService::class.java)
+        fun create():UserAPIService {
+
+            val retrofit  = Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            return retrofit.create(UserAPIService::class.java)
+
+        }
+
 
     }
 }
